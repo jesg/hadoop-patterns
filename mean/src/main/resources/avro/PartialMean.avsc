@@ -1,0 +1,10 @@
+{ 
+	"type": "record",
+	"name": "PartialMean",
+	"namespace": "jesg.avro",
+	"doc": "Partial result for calculating the mean.",
+	"fields": [
+		{"name": "sum", "type": "long", "ordering": "ignore"},
+		{"name": "count", "type": "long", "ordering": "ascending"}
+	]
+}

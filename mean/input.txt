@@ -1,0 +1,6 @@
+the	5
+the	2
+the	9
+a	2
+zar	8
+a	1
