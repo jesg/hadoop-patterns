@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.avro.mapred.AvroValue;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
@@ -13,7 +12,7 @@ import com.google.common.collect.Maps;
 
 class CoOccurrenceReducer extends Reducer<
 	Text, AvroValue<Map<String, Integer>>, 
-	Text, IntWritable> {
+	Text, AvroValue<Map<String, Integer>>> {
 	
 	@Override
 	public void reduce(Text key, Iterable<AvroValue<Map<String, Integer>>> values, Context context) throws IOException, InterruptedException {
@@ -23,10 +22,7 @@ class CoOccurrenceReducer extends Reducer<
 			merge(map, avroValue.datum());
 		}
 		
-		String localKey = key.toString();
-		for (Entry<String, Integer> entry : map.entrySet()) {
-			context.write(new Text(localKey + "," + entry.getKey()), new IntWritable(entry.getValue()));
-		}
+		context.write(key, new AvroValue<Map<String,Integer>>(map));
 	}
 
 	private void merge(Map<String, Integer> map, Map<String, Integer> datum) {
@@ -37,5 +33,6 @@ class CoOccurrenceReducer extends Reducer<
 			
 			map.put(entry.getKey(), currentCount);
 		}
-	}		
+	}
+	
 }

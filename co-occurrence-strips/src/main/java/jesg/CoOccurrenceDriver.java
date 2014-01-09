@@ -1,10 +1,10 @@
 package jesg;
 
 import org.apache.avro.Schema;
+import org.apache.avro.mapred.AvroValue;
 import org.apache.avro.mapreduce.AvroJob;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -27,7 +27,9 @@ public class CoOccurrenceDriver extends Configured implements Tool {
 		job.setJobName("CoOccurance pairs");
 		job.setJarByClass(getClass());
 		
-		AvroJob.setMapOutputValueSchema(job, Schema.createMap(Schema.create(Schema.Type.INT)));
+		Schema mapSchema = Schema.createMap(Schema.create(Schema.Type.INT));
+		AvroJob.setMapOutputValueSchema(job, mapSchema);
+		AvroJob.setOutputValueSchema(job, mapSchema);
 		
 	    FileInputFormat.addInputPath(job, new Path(args[0]));
 	    FileOutputFormat.setOutputPath(job, new Path(args[1]));
@@ -36,7 +38,7 @@ public class CoOccurrenceDriver extends Configured implements Tool {
 	    job.setReducerClass(CoOccurrenceReducer.class);
 	    
 	    job.setOutputKeyClass(Text.class);
-	    job.setOutputValueClass(IntWritable.class);
+	    job.setOutputValueClass(AvroValue.class);
 	    
 		return job.waitForCompletion(true) ? 0 : 1;
 	}
