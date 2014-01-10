@@ -13,9 +13,8 @@ import org.apache.hadoop.mapreduce.Reducer;
 class FreqReducer extends Reducer<
 	AvroKey<Pair>, IntWritable, 
 	AvroKey<Pair>, DoubleWritable> {
-	
-	private CharSequence currentWord;
-	private int currentTotal = 0;
+
+	private int currentTotal;
 	
 	@Override
 	public void reduce(AvroKey<Pair> key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
@@ -23,12 +22,7 @@ class FreqReducer extends Reducer<
 		
 		if( (Boolean)record.get("special") ) {
 			currentTotal = sum(values);
-			currentWord = (CharSequence) record.get("first");
 			return;
-		}
-		
-		if( !((CharSequence) record.get("first")).equals(currentWord) ){
-			System.out.println(">>>>>>>>>>>>>>>>>>>>ERRRRRRROR");
 		}
 		
 		context.write(key, new DoubleWritable((double)sum(values)/currentTotal));
