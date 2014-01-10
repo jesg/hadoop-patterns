@@ -1,0 +1,10 @@
+{ 
+	"type": "record",
+	"name": "JoinKey",
+	"namespace": "jesg.avro",
+	"doc": "Key that joins two datasets.",
+	"fields": [
+		{"name": "joinKey", "type": "long"},
+		{"name": "type", "type": "int"}
+	]
+}
