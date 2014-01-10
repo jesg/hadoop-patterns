@@ -1,0 +1,11 @@
+{ 
+	"type": "record",
+	"name": "Pair",
+	"namespace": "jesg.avro",
+	"doc": "Custom pair that sorts both the with two values first and second.  The special field allows for order inversion",
+	"fields": [
+		{"name": "first", "type": "string"},
+		{"name": "special", "type": "boolean", "default": "false", "order": "descending"},
+		{"name": "second", "type": "string"}
+	]
+}

@@ -38,6 +38,24 @@
   				<target>1.7</target>
   			</configuration>
   		</plugin>
+		<plugin>
+		  <groupId>org.apache.avro</groupId>
+		  <artifactId>avro-maven-plugin</artifactId>
+		  <version>1.7.5</version>
+		  <executions>
+		    <execution>
+		      <phase>generate-sources</phase>
+		      <goals>
+		        <goal>schema</goal>
+		      </goals>
+		      <configuration>
+		        <sourceDirectory>${project.basedir}/src/main/resources/avro</sourceDirectory>
+		        <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+		        <fieldVisibility>PRIVATE</fieldVisibility>
+		      </configuration>
+		    </execution>
+		  </executions>
+		</plugin>
   	</plugins>
   </build>
 </project>

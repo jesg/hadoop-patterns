@@ -1,11 +1,13 @@
 package jesg;
 
-import org.apache.avro.Schema;
-import org.apache.avro.mapred.AvroValue;
+import jesg.avro.Pair;
+
+import org.apache.avro.mapred.AvroKey;
 import org.apache.avro.mapreduce.AvroJob;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -27,17 +29,22 @@ public class FreqDriver extends Configured implements Tool {
 		job.setJobName("freq");
 		job.setJarByClass(getClass());
 		
-		AvroJob.setMapOutputValueSchema(job, Schema.createMap(Schema.create(Schema.Type.INT)));
-		AvroJob.setOutputValueSchema(job, Schema.createMap(Schema.create(Schema.Type.DOUBLE)));
+		AvroJob.setMapOutputKeySchema(job, Pair.getClassSchema());
+		AvroJob.setOutputKeySchema(job, Pair.getClassSchema());
 		
 	    FileInputFormat.addInputPath(job, new Path(args[0]));
 	    FileOutputFormat.setOutputPath(job, new Path(args[1]));
 	    
 	    job.setMapperClass(FreqMapper.class);
 	    job.setReducerClass(FreqReducer.class);
+	    job.setCombinerClass(FreqCombiner.class);
+	    job.setPartitionerClass(FreqPartitioner.class);
 	    
-	    job.setOutputKeyClass(Text.class);
-	    job.setOutputValueClass(AvroValue.class);
+	    job.setMapOutputKeyClass(AvroKey.class);
+	    job.setMapOutputValueClass(IntWritable.class);
+	    
+	    job.setOutputKeyClass(AvroKey.class);
+	    job.setOutputValueClass(DoubleWritable.class);
 	    
 		return job.waitForCompletion(true) ? 0 : 1;
 	}
