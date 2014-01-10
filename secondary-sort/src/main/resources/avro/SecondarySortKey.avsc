@@ -1,0 +1,10 @@
+{ 
+	"type": "record",
+	"name": "SecondarySortKey",
+	"namespace": "jesg.avro",
+	"doc": "Special key that sorts first by station then by timestamp.",
+	"fields": [
+		{"name": "station", "type": "long"},
+		{"name": "timestamp", "type": "long", "order": "descending"}
+	]
+}
