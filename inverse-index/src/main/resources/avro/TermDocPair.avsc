@@ -1,0 +1,10 @@
+{ 
+	"type": "record",
+	"name": "TermDocPair",
+	"namespace": "jesg.avro",
+	"doc": "Key that sorts first by term then by docId",
+	"fields": [
+		{"name": "term", "type": "string"},
+		{"name": "docId", "type": "int"}
+	]
+}

@@ -1,0 +1,10 @@
+{ 
+	"type": "record",
+	"name": "Payload",
+	"namespace": "jesg.avro",
+	"doc": "Document with a specific key.",
+	"fields": [
+		{"name": "id", "type": "int"},
+		{"name": "tf", "type": "int"}
+	]
+}

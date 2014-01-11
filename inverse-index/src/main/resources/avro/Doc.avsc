@@ -1,0 +1,10 @@
+{ 
+	"type": "record",
+	"name": "Doc",
+	"namespace": "jesg.avro",
+	"doc": "Document with a specific key.",
+	"fields": [
+		{"name": "id", "type": "int"},
+		{"name": "content", "type": "string", "ordering": "ignore"}
+	]
+}
