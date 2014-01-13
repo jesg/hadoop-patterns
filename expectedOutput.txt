@@ -1,3 +1,0 @@
-1	3,Sdata,2,Tdata,22,Tdata35
-2	5,Sdata2,4,Tdata2
-3	3,Sdata89,2,Tdata89

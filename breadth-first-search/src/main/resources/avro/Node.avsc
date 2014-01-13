@@ -1,0 +1,11 @@
+{ 
+	"type": "record",
+	"name": "Node",
+	"namespace": "jesg.avro",
+	"doc": "Represents a node in a graph.",
+	"fields": [
+		{"name": "id", "type": "int"},
+		{"name": "distance", "type": "int", "ordering": "ignore"},
+		{"name": "adjacencyList", "type": [{"type": "array", "items": "int"}, "null"], "ordering": "ignore"}
+	]
+}
