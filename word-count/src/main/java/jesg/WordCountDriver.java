@@ -12,33 +12,33 @@ import org.apache.hadoop.util.ToolRunner;
 
 public class WordCountDriver extends Configured implements Tool {
 
-	@Override
-	public int run(String[] args) throws Exception {
-		if (args.length != 2) {
-			System.err.printf(
-					"Usage: %s [generic options] <input> <output> \n",
-					getClass().getSimpleName());
-			ToolRunner.printGenericCommandUsage(System.err);
-			return -1;
-		}
-		Job job = new Job(getConf(), "Word Count");
-		job.setJarByClass(getClass());
+    @Override
+    public int run(String[] args) throws Exception {
+        if (args.length != 2) {
+            System.err.printf(
+                    "Usage: %s [generic options] <input> <output> \n",
+                    getClass().getSimpleName());
+            ToolRunner.printGenericCommandUsage(System.err);
+            return -1;
+        }
+        Job job = new Job(getConf(), "Word Count");
+        job.setJarByClass(getClass());
 
-	    FileInputFormat.addInputPath(job, new Path(args[0]));
-	    FileOutputFormat.setOutputPath(job, new Path(args[1]));
-	    
-	    job.setMapperClass(WordCountMapper.class);
-	    job.setReducerClass(WordCountReducer.class);
-	    
-	    job.setOutputKeyClass(Text.class);
-	    job.setOutputValueClass(IntWritable.class);
-	    
-		return job.waitForCompletion(true) ? 0 : 1;
-	}
-	
-	public static void main(String[] args) throws Exception {
-		int exitCode = ToolRunner.run(new WordCountDriver(), args);
-		System.exit(exitCode);
-	}
+        FileInputFormat.addInputPath(job, new Path(args[0]));
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+
+        job.setMapperClass(WordCountMapper.class);
+        job.setReducerClass(WordCountReducer.class);
+
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
+
+        return job.waitForCompletion(true) ? 0 : 1;
+    }
+
+    public static void main(String[] args) throws Exception {
+        int exitCode = ToolRunner.run(new WordCountDriver(), args);
+        System.exit(exitCode);
+    }
 
 }
