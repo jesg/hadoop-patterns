@@ -21,7 +21,7 @@ public class WordCountDriver extends Configured implements Tool {
             ToolRunner.printGenericCommandUsage(System.err);
             return -1;
         }
-        Job job = new Job(getConf(), "Word Count");
+        Job job = Job.getInstance(getConf(), "Word Count");
         job.setJarByClass(getClass());
 
         FileInputFormat.addInputPath(job, new Path(args[0]));
